@@ -292,6 +292,37 @@
 
       closePopupButton.addEventListener("click", hideInstructionPopup);
 
+
+
+ // ooooooooooooooooooooooooooooooooooooooooooo
+      function getCurrentTimeInMinutes() {
+        const now = new Date();
+        return now.getHours() * 60 + now.getMinutes();
+      }
+
+      function loadRoutine() {
+        const storedRoutine = JSON.parse(localStorage.getItem('routine')) || routineData;
+        const currentTimeInMinutes = getCurrentTimeInMinutes();
+
+        // Sort the routine by time, so the upcoming activity appears first
+        const sortedRoutine = storedRoutine.sort((a, b) => {
+          const timeA = parseInt(a.time.split(':')[0]) * 60 + parseInt(a.time.split(':')[1]);
+          const timeB = parseInt(b.time.split(':')[0]) * 60 + parseInt(b.time.split(':')[1]);
+
+          const diffA = timeA - currentTimeInMinutes;
+          const diffB = timeB - currentTimeInMinutes;
+
+          return (diffA < 0 ? diffA + 1440 : diffA) - (diffB < 0 ? diffB + 1440 : diffB); // Handling negative time differences
+        });
+
+        return sortedRoutine;
+      }
+
+      // ooooooooooooooooooooooooooooooooooooooooooo
+
+
+      
+
       // Display current time in the clock
       function updateClock() {
         const now = new Date();
