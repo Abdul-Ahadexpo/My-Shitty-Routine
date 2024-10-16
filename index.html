@@ -224,83 +224,72 @@
       localStorage.setItem('routine', JSON.stringify(routine));
     }
 
- function renderRoutineCards(routine, isEditable = false) {
-  const routineCardsContainer = document.getElementById("routine-cards");
-  routineCardsContainer.innerHTML = ''; // Clear previous content
+    function renderRoutineCards(routine, isEditable = false) {
+      const routineCardsContainer = document.getElementById("routine-cards");
+      routineCardsContainer.innerHTML = ''; // Clear previous content
 
-  routine.forEach((item, index) => {
-    const card = document.createElement("div");
-    card.className = "card glow bg-base-100 shadow-xl p-4";
+      routine.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card glow bg-base-100 shadow-xl p-4";
 
-    const cardBody = document.createElement("div");
-    cardBody.className = "card-body";
+        const cardBody = document.createElement("div");
+        cardBody.className = "card-body";
 
-    const cardTitle = document.createElement("h2");
-    cardTitle.className = "card-title";
+        const cardTitle = document.createElement("h2");
+        cardTitle.className = "card-title";
 
-    const timeElement = document.createElement("p");
-    timeElement.className = "text-sm text-gray-400";
+        const timeElement = document.createElement("p");
+        timeElement.className = "text-sm text-gray-400";
 
-    const descElement = document.createElement("p");
+        const descElement = document.createElement("p");
 
-    if (isEditable) {
-      // Editable Inputs
-      cardTitle.innerHTML = `<input type="text" class="input input-bordered w-full" value="${item.title}">`;
-      timeElement.innerHTML = `<input type="text" class="input input-bordered w-full" value="${item.time}">`;
-      descElement.innerHTML = `<textarea class="textarea textarea-bordered w-full">${item.description}</textarea>`;
-    } else {
-      // Read-Only Text
-      cardTitle.textContent = item.title;
-      timeElement.textContent = item.time;
-      descElement.textContent = item.description;
-    }
+        if (isEditable) {
+          // Editable Inputs
+          cardTitle.innerHTML = `<input type="text" class="input input-bordered w-full" value="${item.title}">`;
+          timeElement.innerHTML = `<input type="text" class="input input-bordered w-full" value="${item.time}">`;
+          descElement.innerHTML = `<textarea class="textarea textarea-bordered w-full">${item.description}</textarea>`;
+        } else {
+          // Read-Only Text
+          cardTitle.textContent = item.title;
+          timeElement.textContent = item.time;
+          descElement.textContent = item.description;
+        }
 
-    const cardActions = document.createElement("div");
-    cardActions.className = "card-actions justify-end";
+        const cardActions = document.createElement("div");
+        cardActions.className = "card-actions justify-end";
 
-    const editButton = document.createElement("button");
-    editButton.className = "btn";
-    editButton.textContent = isEditable ? "Save" : "Edit";
+        const editButton = document.createElement("button");
+        editButton.className = "btn";
+        editButton.textContent = isEditable ? "Save" : "Edit";
 
-    const deleteButton = document.createElement("button");
-    deleteButton.className = "btn btn-error ml-2"; // Styling delete button
-    deleteButton.textContent = "Delete";
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "btn btn-error ml-2"; // Styling delete button
+        deleteButton.textContent = "Delete";
 
-    deleteButton.addEventListener("click", () => {
-      // Remove the card from the routine array
-      routine.splice(index, 1);
-      saveRoutine(routine); // Update local storage
-      renderRoutineCards(routine); // Re-render the cards
-    });
+        deleteButton.addEventListener("click", () => {
+          // Remove the card from the routine array
+          routine.splice(index, 1);
+          saveRoutine(routine); // Update local storage
+          renderRoutineCards(routine); // Re-render the cards
+        });
 
-    editButton.addEventListener("click", () => {
-      if (isEditable) {
-        // Save changes
-        const updatedTitle = cardTitle.querySelector("input").value;
-        const updatedTime = timeElement.querySelector("input").value;
-        const updatedDesc = descElement.querySelector("textarea").value;
+        editButton.addEventListener("click", () => {
+          if (isEditable) {
+            // Save changes
+            const updatedTitle = cardTitle.querySelector("input").value;
+            const updatedTime = timeElement.querySelector("input").value;
+            const updatedDesc = descElement.querySelector("textarea").value;
 
-        routine[index] = { title: updatedTitle, time: updatedTime, description: updatedDesc };
-        saveRoutine(routine);
-        renderRoutineCards(routine);
-      } else {
-        renderRoutineCards(routine, true);
-      }
-    });
-
-    cardActions.appendChild(editButton);
-    cardActions.appendChild(deleteButton); // Append delete button to actions
-    cardBody.appendChild(cardTitle);
-    cardBody.appendChild(timeElement);
-    cardBody.appendChild(descElement);
-    cardBody.appendChild(cardActions);
-    card.appendChild(cardBody);
-    routineCardsContainer.appendChild(card);
-  });
-}
-
+            routine[index] = { title: updatedTitle, time: updatedTime, description: updatedDesc };
+            saveRoutine(routine);
+            renderRoutineCards(routine);
+          } else {
+            renderRoutineCards(routine, true);
+          }
+        });
 
         cardActions.appendChild(editButton);
+        cardActions.appendChild(deleteButton); // Append delete button to actions
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(timeElement);
         cardBody.appendChild(descElement);
@@ -343,9 +332,7 @@
 
       closePopupButton.addEventListener("click", hideInstructionPopup);
 
-
-
- // ooooooooooooooooooooooooooooooooooooooooooo
+      // ooooooooooooooooooooooooooooooooooooooooooo
       function getCurrentTimeInMinutes() {
         const now = new Date();
         return now.getHours() * 60 + now.getMinutes();
@@ -370,9 +357,6 @@
       }
 
       // ooooooooooooooooooooooooooooooooooooooooooo
-
-
-      
 
       // Display current time in the clock
       function updateClock() {
